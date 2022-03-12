@@ -19,13 +19,9 @@ public class ApiService {
 
     String urlBased = "https://2.intelx.io";
 
-    public String hello() {
-        return "Hello World!";
-    }
-
     public LinkedHashMap<String, Object> requestSearch(String email){
         LinkedHashMap<String, Object> result = this.getSearch(email);
-        System.out.println(result);
+        
         return result;
     }
 
@@ -34,7 +30,7 @@ public class ApiService {
         String url = urlBased + "/intelligent/search";
         String token = "3e301f8b-3604-499f-a8c7-cd273220a882";
         String jsonInString = "";
-        
+
         List<String> TerminateList = new ArrayList<>();
         LinkedHashMap<String, Object> resultList = new LinkedHashMap<String, Object>();
 
