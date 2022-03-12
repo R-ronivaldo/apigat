@@ -35,7 +35,7 @@ public class ApiReceiveController {
         String jsonInString = "";
 
         RequestApi requestApi = RequestApi.builder()
-        .term("gpinto@upfa.br")
+        .term("reitor@ufpa.br")
         .lookuplevel(0)
         .maxresults(1000)
         .timeout(0)
