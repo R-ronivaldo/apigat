@@ -1,9 +1,7 @@
 package com.example.apiexample.controller;
 
-import com.example.apiexample.model.RequestApi;
-import com.example.apiexample.model.ResponseApi;
+import com.example.apiexample.model.RequestExternalApi;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-public class ApiReceiveController {
+public class ExternalApiController {
 
     @RequestMapping("/hello")
     public String hello() {
@@ -31,10 +29,10 @@ public class ApiReceiveController {
     private String getCountries() {
         String url = "https://2.intelx.io/intelligent/search";
         String token = "87b9fdc9-9c85-414d-8810-4263fb0b0968";
-        List<String> myList = new ArrayList<>();
+        List<String> TerminateList = new ArrayList<>();
         String jsonInString = "";
 
-        RequestApi requestApi = RequestApi.builder()
+        RequestExternalApi requestApi = RequestExternalApi.builder()
         .term("reitor@ufpa.br")
         .lookuplevel(0)
         .maxresults(1000)
@@ -43,7 +41,7 @@ public class ApiReceiveController {
         .dateto("")
         .sort(2)
         .media(0)
-        .terminate(myList)
+        .terminate(TerminateList)
         .build();
 
         jsonInString = convertRequestToJson(requestApi);
@@ -80,9 +78,6 @@ public class ApiReceiveController {
             System.out.println(e);
             return "error to convert";
         }
-    }
-
-    void convertResultToModel(String jsonInString){
     }
         
 }
