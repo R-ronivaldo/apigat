@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class ResponseApi {
+public class ResponseExternalApiModel {
     private String id;
     private boolean softselectorwarning;
     private int status;

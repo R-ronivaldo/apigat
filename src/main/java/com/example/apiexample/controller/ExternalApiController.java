@@ -1,6 +1,6 @@
 package com.example.apiexample.controller;
 
-import com.example.apiexample.model.RequestExternalApi;
+import com.example.apiexample.model.ResquestExternalApiModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +32,7 @@ public class ExternalApiController {
         List<String> TerminateList = new ArrayList<>();
         String jsonInString = "";
 
-        RequestExternalApi requestApi = RequestExternalApi.builder()
+        ResquestExternalApiModel requestApi = ResquestExternalApiModel.builder()
         .term("reitor@ufpa.br")
         .lookuplevel(0)
         .maxresults(1000)
