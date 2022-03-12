@@ -1,4 +1,4 @@
-package com.example.apiexample.model;
+package com.example.apiexample.model.external;
 
 import lombok.Builder;
 import lombok.Data;
