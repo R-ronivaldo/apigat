@@ -1,11 +1,10 @@
-package com.example.apiexample.controller;
+package com.example.apiexample.services;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import com.example.apiexample.model.ResquestModel;
 import com.example.apiexample.model.external.ResquestExternalApiModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,22 +13,18 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-@RestController
-public class ExternalApiController {
+public class ApiService {
 
     String urlBased = "https://2.intelx.io";
 
-    @RequestMapping("/hello")
     public String hello() {
         return "Hello World!";
     }
 
-    @PostMapping("/Search")
-    public LinkedHashMap<String, Object> requestSearch(@RequestBody ResquestModel requestModel){
-        LinkedHashMap<String, Object> result = this.getSearch(requestModel.getEmail());
+    public LinkedHashMap<String, Object> requestSearch(String email){
+        LinkedHashMap<String, Object> result = this.getSearch(email);
         System.out.println(result);
         return result;
     }
@@ -38,8 +33,9 @@ public class ExternalApiController {
     private LinkedHashMap<String, Object> getSearch(String string) {
         String url = urlBased + "/intelligent/search";
         String token = "3e301f8b-3604-499f-a8c7-cd273220a882";
-        List<String> TerminateList = new ArrayList<>();
         String jsonInString = "";
+        
+        List<String> TerminateList = new ArrayList<>();
         LinkedHashMap<String, Object> resultList = new LinkedHashMap<String, Object>();
 
         ResquestExternalApiModel requestApi = ResquestExternalApiModel.builder()
@@ -59,9 +55,8 @@ public class ExternalApiController {
         ResponseEntity<Object> result = MakeRequest(url,jsonInString,token);
 
         resultList = (LinkedHashMap<String, Object>) result.getBody();
-        System.out.println(result.getBody().getClass().getName());
+        
         return getResult(resultList.get("id").toString(), token);
-        //return "olá";
     }
 
     private ResponseEntity<Object> MakeRequest(String url, String jsonBody, String token) {
@@ -76,8 +71,6 @@ public class ExternalApiController {
         HttpEntity<String> requestEnty = new HttpEntity<>(jsonBody, headers);
 
         ResponseEntity<Object> result = restTemplat.postForEntity(url, requestEnty, Object.class);
-
-        System.out.println(result.getBody());
           
         return result;
     }
@@ -108,6 +101,7 @@ public class ExternalApiController {
         ResponseEntity<Object> result = restTemplat.exchange(url, HttpMethod.GET, requestEnty, Object.class);
 
         resultList = (LinkedHashMap<String, Object>) result.getBody();
+
         return resultList;
     }
         
