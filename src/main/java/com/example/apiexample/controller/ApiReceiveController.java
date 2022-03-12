@@ -1,5 +1,8 @@
 package com.example.apiexample.controller;
 
+import com.example.apiexample.model.RequestApi;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -27,43 +30,53 @@ public class ApiReceiveController {
 
     @GetMapping("/Search")
     private String getCountries() {
-        
-        HttpHeaders headers = new HttpHeaders();
-        RestTemplate restTemplat = new RestTemplate();
-
+        String url = "https://2.intelx.io/intelligent/search";
         String token = "87b9fdc9-9c85-414d-8810-4263fb0b0968";
-        String url = "https://2.intelx.io/";
+        List<String> myList = new ArrayList<>();
+        String jsonInString = "";
+        
+        ObjectMapper mapper = new ObjectMapper();
+
+        RequestApi requestApi = RequestApi.builder()
+        .term("gpinto@upfa.br")
+        .lookuplevel(0)
+        .maxresults(1000)
+        .timeout(0)
+        .datefrom("")
+        .dateto("")
+        .sort(2)
+        .media(0)
+        .terminate(myList)
+        .build();
+
+        try {
+            jsonInString = mapper.writeValueAsString(requestApi);
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return "erro convert";
+        }
+
+        ResponseEntity<Object> result = MakeRequest(url,jsonInString,token);
+            
+        return result.getBody().toString();
+        
+    }
+
+    ResponseEntity<Object> MakeRequest(String url,String jsonInString, String token) {
+        
+        RestTemplate restTemplat = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
 
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("x-key", token);
 
-        Map<String, String> bodyParamMap = new HashMap<>();
+        HttpEntity<String> requestEnty = new HttpEntity<>(jsonInString, headers);
 
-        bodyParamMap.put("term", "gpinto@upfa.br");
-        bodyParamMap.put("lookuplevel", "0");
-        bodyParamMap.put("maxresults", "1000");
-        bodyParamMap.put("timeout", "0");
-        bodyParamMap.put("datefrom", "");
-        bodyParamMap.put("dateto", "");
-        bodyParamMap.put("sort", "2");
-        bodyParamMap.put("media", "0");
-        bodyParamMap.put("terminate", "[]");
-        try {
-
-            String reqBodyData = new ObjectMapper().writeValueAsString(bodyParamMap);
-            
-            HttpEntity<String> requestEnty = new HttpEntity<>(reqBodyData, headers);
-
-            ResponseEntity<Object> result = restTemplat.postForEntity(url, requestEnty, Object.class);
-        
-            return result.toString();
-            
-        } catch (Exception e) {
-            System.out.println("erro aqui");
-            return "erro";
-        }
-        
+        ResponseEntity<Object> result = restTemplat.postForEntity(url, requestEnty, Object.class);
+          
+        return result;
     }
         
 }
