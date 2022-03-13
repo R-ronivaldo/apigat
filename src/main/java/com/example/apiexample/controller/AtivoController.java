@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,12 +22,12 @@ public class AtivoController {
         this.ativoRepository = ativoRepository;
     }
 
-    @GetMapping("/ativos")
+    @GetMapping("/ativo")
     public List<Ativo> getAllAtivos(){
         return ativoRepository.findAll();
     }
 
-    @GetMapping("/ativos/{id}")
+    @GetMapping("/ativo/{id}")
     public Ativo getAtivo(@PathVariable("id") Long id){
         Optional<Ativo> ativoFind = this.ativoRepository.findById(id);
 
@@ -39,7 +38,7 @@ public class AtivoController {
         return null;
     }
 
-    @PostMapping("/ativos")
+    @PostMapping("/ativo")
     public Ativo addAtivo(@RequestBody Ativo ativo){
         return this.ativoRepository.save(ativo);
     }

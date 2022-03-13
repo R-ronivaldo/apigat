@@ -1,5 +1,7 @@
 package com.example.apiexample.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,12 +16,10 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "ativos")
-public class Ativo extends BaseEntity{
+@Table(name = "tracks")
+public class Track extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    private String email;
-    private String domain;
+    private Long id;
 }
