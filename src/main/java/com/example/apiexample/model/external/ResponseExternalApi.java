@@ -6,9 +6,8 @@ import lombok.Data;
 @Builder
 @Data
 public class ResponseExternalApi {
-    private String id;
-    private boolean softselectorwarning;
-    private int status;
-    private String altterm;
-    private String alttermh;
+    private String systemid;
+    private String storageid;
+    private String name;
+    private String description;
 }
