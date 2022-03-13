@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class ResquestExternalApiModel {
+public class ResquestExternalApi {
     private String term;
     private int lookuplevel;
     private int maxresults;

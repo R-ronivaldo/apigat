@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import com.example.apiexample.model.external.ResquestExternalApiModel;
+import com.example.apiexample.model.external.ResquestExternalApi;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.http.HttpEntity;
@@ -34,7 +34,7 @@ public class ExternalApiService {
         List<String> TerminateList = new ArrayList<>();
         LinkedHashMap<String, Object> resultList = new LinkedHashMap<String, Object>();
 
-        ResquestExternalApiModel requestApi = ResquestExternalApiModel.builder()
+        ResquestExternalApi requestApi = ResquestExternalApi.builder()
         .term(string)
         .lookuplevel(0)
         .maxresults(1000)
