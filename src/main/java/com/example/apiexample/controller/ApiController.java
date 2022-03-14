@@ -56,18 +56,14 @@ public class ApiController {
             
             Track trackCreated = trackController.addTrack(track);
 
-            if (trackCreated != null){
-
-                for (int i = 0; i < externalApiResult.size(); i++) {
+            for (int i = 0; i < externalApiResult.size(); i++) {
                 
-                    Search item = externalApiResult.get(i);
+                Search item = externalApiResult.get(i);
                     
-                    item.setTrack_id(trackCreated.getId());
+                item.setTrack_id(trackCreated.getId());
                     
-                    searchController.addSearch(item);
+                searchController.addSearch(item);
                     
-                }
-
             }
         
         }
