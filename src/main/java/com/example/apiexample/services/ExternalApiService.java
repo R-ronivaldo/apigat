@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import com.example.apiexample.model.Search;
 import com.example.apiexample.model.external.ResponseExternalApi;
 import com.example.apiexample.model.external.ResquestExternalApi;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,14 +21,14 @@ public class ExternalApiService {
 
     String urlBased = "https://2.intelx.io";
 
-    public List<ResponseExternalApi> requestSearch(String email){
-        List<ResponseExternalApi> result = this.getSearch(email);
+    public List<Search> requestSearch(String email){
+        List<Search> result = this.getSearch(email);
         
         return result;
     }
 
 
-    private List<ResponseExternalApi> getSearch(String string) {
+    private List<Search> getSearch(String string) {
         String url = urlBased + "/intelligent/search";
         String token = "3e301f8b-3604-499f-a8c7-cd273220a882";
         String jsonInString = "";
@@ -82,7 +83,7 @@ public class ExternalApiService {
         }
     }
 
-    private List<ResponseExternalApi> getResult(String idSearch, String token){
+    private List<Search> getResult(String idSearch, String token){
         String url = urlBased + "/intelligent/search/result?id=" + idSearch;
         LinkedHashMap<String, Object> resultList = new LinkedHashMap<String, Object>();
 
@@ -100,7 +101,7 @@ public class ExternalApiService {
         resultList = (LinkedHashMap<String, Object>) result.getBody();
         List<LinkedHashMap<String, Object>> resultFinalList = (List<LinkedHashMap<String, Object>>) resultList.get("records");
 
-        List<ResponseExternalApi> responseList = new ArrayList<ResponseExternalApi>();
+        List<Search> searchList = new ArrayList<Search>();
 
         for (int i = 0; i < resultFinalList.size() ; i++) {
 
@@ -108,19 +109,18 @@ public class ExternalApiService {
             
             LinkedHashMap<String, Object> item = resultFinalList.get(i);
 
-            ResponseExternalApi responseExternalApi = ResponseExternalApi.builder()
-            .systemid(item.get("systemid").toString())
-            .storageid(item.get("storageid").toString())
-            .name(item.get("name").toString())
-            .description(item.get("description").toString())
-            .build();
+            Search search = new Search();
+            search.setSystemid(item.get("systemid").toString());
+            search.setStorageid(item.get("storageid").toString());
+            search.setName(item.get("name").toString());
+            search.setDescription(item.get("description").toString());
 
-            responseList.add(responseExternalApi);
+            searchList.add(search);
         }
 
-        System.out.println(responseList);
+        System.out.println(searchList);
 
-        return responseList;
+        return searchList;
     }
         
 }

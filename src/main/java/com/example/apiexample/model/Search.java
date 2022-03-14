@@ -21,4 +21,10 @@ public class Search extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long track_id;
+    private String systemid;
+    private String storageid;
+    private String name;
+    private String description;
+
+    
 }

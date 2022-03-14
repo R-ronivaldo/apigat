@@ -1,12 +1,10 @@
 package com.example.apiexample.controller;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.example.apiexample.model.Ativo;
 import com.example.apiexample.model.Search;
 import com.example.apiexample.model.Track;
-import com.example.apiexample.model.external.ResponseExternalApi;
 import com.example.apiexample.services.ExternalApiService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +28,9 @@ public class ApiController {
     private SearchController searchController;
 
     @PostMapping("/index")
-    public List<ResponseExternalApi> index(@RequestBody Ativo ativo){
+    public List<Search> index(@RequestBody Ativo ativo){
+
+        List<Search> externalApiResult = externalApiController.requestSearch(ativo.getEmail());
         
         Ativo ativoCreated = ativoController.addAtivo(ativo);
         
@@ -38,15 +38,15 @@ public class ApiController {
         
         if(trackFind != null){
 
-            Search search = new Search();
-
-            search.setTrack_id(trackFind.getId());
-
-            Search searchFind = searchController.addSearch(search);
-
-            System.out.println(searchFind);
-
-            //TODO return search
+            for (int i = 0; i < externalApiResult.size(); i++) {
+                
+                Search item = externalApiResult.get(i);
+                
+                item.setTrack_id(trackFind.getId());
+                
+                searchController.addSearch(item);
+                
+            }
         
         } else {
 
@@ -58,21 +58,19 @@ public class ApiController {
 
             if (trackCreated != null){
 
-                Search search = new Search();
-
-                search.setTrack_id(trackCreated.getId());
-
-                Search searchFind = searchController.addSearch(search);
-
-                System.out.println(searchFind);
-
-                //TODO return search
+                for (int i = 0; i < externalApiResult.size(); i++) {
+                
+                    Search item = externalApiResult.get(i);
+                    
+                    item.setTrack_id(trackCreated.getId());
+                    
+                    searchController.addSearch(item);
+                    
+                }
 
             }
         
         }
-        
-        List<ResponseExternalApi> externalApiResult = externalApiController.requestSearch(ativo.getEmail());
 
         return externalApiResult;
     
