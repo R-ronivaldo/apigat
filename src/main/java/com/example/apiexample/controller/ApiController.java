@@ -1,10 +1,12 @@
 package com.example.apiexample.controller;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import com.example.apiexample.model.Ativo;
 import com.example.apiexample.model.Search;
 import com.example.apiexample.model.Track;
+import com.example.apiexample.model.external.ResponseExternalApi;
 import com.example.apiexample.services.ExternalApiService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ public class ApiController {
     private SearchController searchController;
 
     @PostMapping("/index")
-    public LinkedHashMap<String, Object> index(@RequestBody Ativo ativo){
+    public List<ResponseExternalApi> index(@RequestBody Ativo ativo){
         
         Ativo ativoCreated = ativoController.addAtivo(ativo);
         
@@ -70,7 +72,7 @@ public class ApiController {
         
         }
         
-        LinkedHashMap<String, Object> externalApiResult = externalApiController.requestSearch(ativo.getEmail());
+        List<ResponseExternalApi> externalApiResult = externalApiController.requestSearch(ativo.getEmail());
 
         return externalApiResult;
     

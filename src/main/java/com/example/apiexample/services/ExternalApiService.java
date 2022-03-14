@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import com.example.apiexample.model.external.ResponseExternalApi;
 import com.example.apiexample.model.external.ResquestExternalApi;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,14 +20,14 @@ public class ExternalApiService {
 
     String urlBased = "https://2.intelx.io";
 
-    public LinkedHashMap<String, Object> requestSearch(String email){
-        LinkedHashMap<String, Object> result = this.getSearch(email);
+    public List<ResponseExternalApi> requestSearch(String email){
+        List<ResponseExternalApi> result = this.getSearch(email);
         
         return result;
     }
 
 
-    private LinkedHashMap<String, Object> getSearch(String string) {
+    private List<ResponseExternalApi> getSearch(String string) {
         String url = urlBased + "/intelligent/search";
         String token = "3e301f8b-3604-499f-a8c7-cd273220a882";
         String jsonInString = "";
@@ -81,7 +82,7 @@ public class ExternalApiService {
         }
     }
 
-    private LinkedHashMap<String, Object> getResult(String idSearch, String token){
+    private List<ResponseExternalApi> getResult(String idSearch, String token){
         String url = urlBased + "/intelligent/search/result?id=" + idSearch;
         LinkedHashMap<String, Object> resultList = new LinkedHashMap<String, Object>();
 
@@ -97,8 +98,29 @@ public class ExternalApiService {
         ResponseEntity<Object> result = restTemplat.exchange(url, HttpMethod.GET, requestEnty, Object.class);
 
         resultList = (LinkedHashMap<String, Object>) result.getBody();
+        List<LinkedHashMap<String, Object>> resultFinalList = (List<LinkedHashMap<String, Object>>) resultList.get("records");
 
-        return resultList;
+        List<ResponseExternalApi> responseList = new ArrayList<ResponseExternalApi>();
+
+        for (int i = 0; i < resultFinalList.size() ; i++) {
+
+            System.out.println(resultFinalList.get(i).getClass().getName());
+            
+            LinkedHashMap<String, Object> item = resultFinalList.get(i);
+
+            ResponseExternalApi responseExternalApi = ResponseExternalApi.builder()
+            .systemid(item.get("systemid").toString())
+            .storageid(item.get("storageid").toString())
+            .name(item.get("name").toString())
+            .description(item.get("description").toString())
+            .build();
+
+            responseList.add(responseExternalApi);
+        }
+
+        System.out.println(responseList);
+
+        return responseList;
     }
         
 }
