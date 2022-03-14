@@ -23,12 +23,12 @@ public class TrackController {
     }
 
     @GetMapping("/track")
-    public List<Track> getAllAtivos(){
+    public List<Track> getAllTrack(){
         return trackRepository.findAll();
     }
 
     @GetMapping("/track/{id}")
-    public Track getAtivo(@PathVariable("id") Long id){
+    public Track getTrack(@PathVariable("id") Long id){
         Optional<Track> trackFind = this.trackRepository.findById(id);
 
         if (trackFind.isPresent()){
@@ -39,7 +39,7 @@ public class TrackController {
     }
 
     @PostMapping("/track")
-    public Track addAtivo(@RequestBody Track track){
+    public Track addTrack(@RequestBody Track track){
         return this.trackRepository.save(track);
     }
 }

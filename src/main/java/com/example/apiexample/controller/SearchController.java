@@ -21,12 +21,12 @@ public class SearchController {
     }
 
     @GetMapping("/search")
-    public List<Search> getAllAtivos(){
+    public List<Search> getAllSearch(){
         return searchRepository.findAll();
     }
 
     @GetMapping("/search/{id}")
-    public Search getAtivo(Long id){
+    public Search getSearch(Long id){
         Optional<Search> searchFind = this.searchRepository.findById(id);
 
         if (searchFind.isPresent()){
@@ -37,7 +37,7 @@ public class SearchController {
     }
 
     @PostMapping("/search")
-    public Search addAtivo(Search search){
+    public Search addSearch(Search search){
         return this.searchRepository.save(search);
     }
 }
