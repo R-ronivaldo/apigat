@@ -1,6 +1,7 @@
 package com.example.apiexample.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.example.apiexample.model.Ativo;
 import com.example.apiexample.model.Search;
