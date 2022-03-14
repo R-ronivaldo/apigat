@@ -9,6 +9,7 @@ import com.example.apiexample.model.Track;
 import com.example.apiexample.services.ExternalApiService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,10 +33,26 @@ public class ApiController {
     public List<Search> index(@RequestBody Ativo ativo){
 
         List<Search> externalApiResult = externalApiController.requestSearch(ativo.getEmail());
+
+        ResponseEntity<List<Ativo>> ativoFind = ativoController.getAtivosByEmail(ativo.getEmail());
+
+        Ativo ativoCreatedOrFind = new Ativo();
+
+        System.out.println(ativoFind.getBody().isEmpty());
+
+        if (ativoFind.getBody().isEmpty()){
+            
+            ativoCreatedOrFind = ativoController.addAtivo(ativo);
+            System.out.println("criado e foi pro banco");
+
+        } else {
+            ativoCreatedOrFind = ativoFind.getBody().get(0);
+            System.out.println("veio do banco");
+        }
+
+        System.out.println(ativoCreatedOrFind);
         
-        Ativo ativoCreated = ativoController.addAtivo(ativo);
-        
-        Track trackFind = trackController.getTrack(ativoCreated.getId());
+        Track trackFind = trackController.getTrack(ativoCreatedOrFind.getId());
         
         if(trackFind != null){
 
@@ -53,7 +70,7 @@ public class ApiController {
 
             Track track = new Track();
             
-            track.setAtivo_id(ativoCreated.getId());
+            track.setAtivo_id(ativoCreatedOrFind.getId());
             
             Track trackCreated = trackController.addTrack(track);
 
