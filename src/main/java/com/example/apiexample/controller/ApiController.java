@@ -30,27 +30,29 @@ public class ApiController {
 
     @PostMapping("/index")
     public List<Search> index(@RequestBody Ativo ativo){
+        Track track = new Track();
+        Ativo ativoDB = new Ativo();
+        Track trackDB = new Track();
 
         List<Search> externalApiResult = externalApiController.requestSearch(ativo.getEmail());
 
-        Ativo ativoCreated = new Ativo("junior@gmail.com", "web");
+        //TODO - check if ativo exist
 
-        Track track = new Track();
+        ativo.setTrack(track);
 
-        ativoCreated.setTrack(track);
+        track.setAtivo(ativo);
+            
+        ativoDB = ativoController.addAtivo(ativo);
 
-        track.setAtivo(ativoCreated);
-        
-        Ativo ativoDB = ativoController.addAtivo(ativoCreated);
+        trackDB = trackController.getTrack(ativoDB.getTrack().getId());
 
-        Track trackDB = trackController.getTrack(ativoDB.getTrack().getId());
 
         for (int i = 0; i < externalApiResult.size(); i++) {
                 
             Search item = externalApiResult.get(i);
-                
+                        
             item.setTrack(trackDB);
-                
+                        
             searchController.addSearch(item);
         }
 

@@ -29,7 +29,7 @@ public class ExternalApiService {
 
     private List<Search> getSearch(String string) {
         String url = urlBased + "/intelligent/search";
-        String token = "87b9fdc9-9c85-414d-8810-4263fb0b0968";
+        String token = "3e301f8b-3604-499f-a8c7-cd273220a882";
         String jsonInString = "";
 
         List<String> TerminateList = new ArrayList<>();
