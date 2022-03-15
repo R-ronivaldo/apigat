@@ -8,6 +8,7 @@ import com.example.apiexample.respository.SearchRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +27,7 @@ public class SearchController {
     }
 
     @GetMapping("/search/{id}")
-    public Search getSearch(Long id){
+    public Search getSearch(@PathVariable("id") Long id){
         Optional<Search> searchFind = this.searchRepository.findById(id);
 
         if (searchFind.isPresent()){
