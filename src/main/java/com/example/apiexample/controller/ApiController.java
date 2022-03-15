@@ -33,53 +33,28 @@ public class ApiController {
 
         List<Search> externalApiResult = externalApiController.requestSearch(ativo.getEmail());
 
-        ResponseEntity<List<Ativo>> ativoFind = ativoController.getAtivosByEmail(ativo.getEmail());
+        Ativo ativoCreated = new Ativo("junior@gmail.com", "web");
 
-        Ativo ativoCreatedOrFind = new Ativo();
+        Track track = new Track();
 
-        if (ativoFind.getBody().isEmpty()){
-            
-            ativoCreatedOrFind = ativoController.addAtivo(ativo);
+        ativoCreated.setTrack(track);
 
-        } else {
-            ativoCreatedOrFind = ativoFind.getBody().get(0);
-        }
+        track.setAtivo(ativoCreated);
         
-        Track trackFind = trackController.getTrack(ativoCreatedOrFind.getId());
-        
-        if(trackFind != null){
+        Ativo ativoDB = ativoController.addAtivo(ativoCreated);
 
-            for (int i = 0; i < externalApiResult.size(); i++) {
-                
-                Search item = externalApiResult.get(i);
-                
-                item.setTrack_id(trackFind.getId());
-                
-                searchController.addSearch(item);
-                
-            }
-        
-        } else {
+        Track trackDB = trackController.getTrack(ativoDB.getTrack().getId());
 
-            Track track = new Track();
-            
-            track.setAtivo_id(ativoCreatedOrFind.getId());
-            
-            Track trackCreated = trackController.addTrack(track);
-
-            for (int i = 0; i < externalApiResult.size(); i++) {
+        for (int i = 0; i < externalApiResult.size(); i++) {
                 
-                Search item = externalApiResult.get(i);
-                    
-                item.setTrack_id(trackCreated.getId());
-                    
-                searchController.addSearch(item);
-                    
-            }
-        
+            Search item = externalApiResult.get(i);
+                
+            item.setTrack(trackDB);
+                
+            searchController.addSearch(item);
         }
 
-        return externalApiResult;
+        return externalApiController.requestSearch(ativo.getEmail());
     
     }
 }
