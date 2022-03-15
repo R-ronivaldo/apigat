@@ -1,7 +1,6 @@
 package com.example.apiexample.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.example.apiexample.model.Ativo;
 import com.example.apiexample.model.Search;
@@ -38,19 +37,13 @@ public class ApiController {
 
         Ativo ativoCreatedOrFind = new Ativo();
 
-        System.out.println(ativoFind.getBody().isEmpty());
-
         if (ativoFind.getBody().isEmpty()){
             
             ativoCreatedOrFind = ativoController.addAtivo(ativo);
-            System.out.println("criado e foi pro banco");
 
         } else {
             ativoCreatedOrFind = ativoFind.getBody().get(0);
-            System.out.println("veio do banco");
         }
-
-        System.out.println(ativoCreatedOrFind);
         
         Track trackFind = trackController.getTrack(ativoCreatedOrFind.getId());
         

@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.example.apiexample.model.Search;
-import com.example.apiexample.model.external.ResponseExternalApi;
 import com.example.apiexample.model.external.ResquestExternalApi;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -30,7 +29,7 @@ public class ExternalApiService {
 
     private List<Search> getSearch(String string) {
         String url = urlBased + "/intelligent/search";
-        String token = "3e301f8b-3604-499f-a8c7-cd273220a882";
+        String token = "87b9fdc9-9c85-414d-8810-4263fb0b0968";
         String jsonInString = "";
 
         List<String> TerminateList = new ArrayList<>();
@@ -104,8 +103,6 @@ public class ExternalApiService {
         List<Search> searchList = new ArrayList<Search>();
 
         for (int i = 0; i < resultFinalList.size() ; i++) {
-
-            System.out.println(resultFinalList.get(i).getClass().getName());
             
             LinkedHashMap<String, Object> item = resultFinalList.get(i);
 
@@ -117,8 +114,6 @@ public class ExternalApiService {
 
             searchList.add(search);
         }
-
-        System.out.println(searchList);
 
         return searchList;
     }
