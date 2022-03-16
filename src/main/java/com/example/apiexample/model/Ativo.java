@@ -8,11 +8,17 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.example.apiexample.respository.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,6 +39,11 @@ public class Ativo extends BaseEntity implements Serializable{
     private Long id;
     private String email;
     private String domain;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private User user;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "ativo")
     private Track track;
 
