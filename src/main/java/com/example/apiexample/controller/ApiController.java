@@ -1,15 +1,19 @@
 package com.example.apiexample.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import com.example.apiexample.model.Ativo;
 import com.example.apiexample.model.Search;
 import com.example.apiexample.model.Track;
+import com.example.apiexample.model.User;
 import com.example.apiexample.services.ExternalApiService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,17 +31,24 @@ public class ApiController {
     @Autowired
     private SearchController searchController;
 
+    @Autowired
+    private UserController userController;
+
     @PostMapping("/index")
-    public List<Search> index(@RequestBody Ativo ativo){
+    public List<Search> index(@RequestBody Map<String, String> request){
+        User user = new User(request.get("email"),request.get("password"));
+        Ativo ativo = new Ativo(request.get("email"),request.get("term"));
         Track track = new Track();
         Ativo ativoDB = new Ativo();
         Track trackDB = new Track();
 
         List<Search> externalApiResult = externalApiController.requestSearch(ativo.getEmail());
 
-        //TODO - check if ativo exist
+        User userDB = userController.addUser(user);
 
         ativo.setTrack(track);
+
+        ativo.setUser(userDB);
 
         track.setAtivo(ativo);
             

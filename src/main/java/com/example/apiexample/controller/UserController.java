@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-	public String getAtivosByEmail(@RequestBody User userRequest) {
+	public String getUserByEmail(@RequestBody User userRequest) {
 		List<User> users = this.userRepository.findByEmail(userRequest.getEmail());
 
         User userFind = users.get(0);
