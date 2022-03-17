@@ -1,5 +1,5 @@
 # CHALLENGE
-Implementation about Vazamento de Dados challenge to GAT enterprise.
+Implementação do desafio para solução de vazamento de dados através de busca e monitoramento para Empresa GAT InfoSec.
 
 # API GAT
 A API GAT é uma aplicação para cadastro de usuários e monitoramento de ativos em exposição e vulnerabilidades na rede.
