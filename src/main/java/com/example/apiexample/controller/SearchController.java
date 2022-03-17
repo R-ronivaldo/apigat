@@ -21,7 +21,6 @@ public class SearchController {
         this.searchRepository = searchRepository;
     }
 
-    @GetMapping("/search")
     public List<Search> getAllSearch(){
         return searchRepository.findAll();
     }
@@ -42,7 +41,6 @@ public class SearchController {
         return searchRepository.findByTrack_id(id);
     }
 
-    @PostMapping("/search")
     public Search addSearch(Search search){
         return this.searchRepository.save(search);
     }

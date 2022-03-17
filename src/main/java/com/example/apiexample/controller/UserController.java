@@ -22,7 +22,6 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/user")
     public List<User> getAllUser(){
         return userRepository.findAll();
     }
@@ -30,12 +29,12 @@ public class UserController {
     @GetMapping("/user/{id}")
     public User getUser(@PathVariable("id") Long id){
         Optional<User> userFind = this.userRepository.findById(id);
+        
+        //workaround to remove password
+        User userResponse = new User();
+        userResponse.setEmail(userFind.get().getEmail());
 
-        if (userFind.isPresent()){
-            return userFind.get();
-        }
-
-        return null;
+        return userResponse;
     }
 
     @PostMapping("/login")

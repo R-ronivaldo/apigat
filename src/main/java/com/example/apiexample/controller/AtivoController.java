@@ -25,7 +25,6 @@ public class AtivoController {
         this.ativoRepository = ativoRepository;
     }
 
-    @GetMapping("/ativo")
     public List<Ativo> getAllAtivos(){
         return ativoRepository.findAll();
     }
@@ -46,12 +45,10 @@ public class AtivoController {
         return ativoRepository.findByUser_id(id);
     }
 
-    @GetMapping("/ativos/{name}")
 	public ResponseEntity<List<Ativo>> getAtivosByEmail(@RequestParam String email) {
 		return new ResponseEntity<List<Ativo>>(ativoRepository.findByEmail(email), HttpStatus.OK);
 	}   
 
-    @PostMapping("/ativo")
     public Ativo addAtivo(@RequestBody Ativo ativo){
         return this.ativoRepository.save(ativo);
     }
