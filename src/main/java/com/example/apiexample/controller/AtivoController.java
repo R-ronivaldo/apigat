@@ -41,6 +41,11 @@ public class AtivoController {
         return null;
     }
 
+    @GetMapping("/ativo/user/{id}")
+    public List<Ativo> getAllAtivosByIdUser_id(@PathVariable("id") Long id){
+        return ativoRepository.findByUser_id(id);
+    }
+
     @GetMapping("/ativos/{name}")
 	public ResponseEntity<List<Ativo>> getAtivosByEmail(@RequestParam String email) {
 		return new ResponseEntity<List<Ativo>>(ativoRepository.findByEmail(email), HttpStatus.OK);

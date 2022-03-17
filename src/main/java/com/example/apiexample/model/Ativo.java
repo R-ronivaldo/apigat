@@ -49,8 +49,9 @@ public class Ativo extends BaseEntity implements Serializable{
 
     public Ativo(){}
 
-    public Ativo(String email, String domain){
+    public Ativo(String email, String domain, User user){
         this.email = email;
         this.domain = domain;
+        this.user = user;
     }
 }

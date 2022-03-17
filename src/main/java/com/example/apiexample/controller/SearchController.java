@@ -37,6 +37,11 @@ public class SearchController {
         return null;
     }
 
+    @GetMapping("/search/track/{id}")
+    public List<Search> getAllSearchByTrack(@PathVariable("id") Long id){
+        return searchRepository.findByTrack_id(id);
+    }
+
     @PostMapping("/search")
     public Search addSearch(Search search){
         return this.searchRepository.save(search);

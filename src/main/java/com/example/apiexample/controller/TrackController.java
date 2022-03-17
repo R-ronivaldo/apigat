@@ -38,6 +38,11 @@ public class TrackController {
         return null;
     }
 
+    @GetMapping("/track/user/{id}")
+    public List<Track> getAllTrackByAtivo_id(@PathVariable("id") Long id){
+        return trackRepository.findByAtivo_id(id);
+    }
+
     @PostMapping("/track")
     public Track addTrack(@RequestBody Track track){
         return this.trackRepository.save(track);

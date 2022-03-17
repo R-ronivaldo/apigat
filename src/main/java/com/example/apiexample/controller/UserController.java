@@ -39,19 +39,21 @@ public class UserController {
     }
 
     @PostMapping("/login")
-	public String getUserByEmail(@RequestBody User userRequest) {
+	public User getUserByEmail(@RequestBody User userRequest) {
+
 		List<User> users = this.userRepository.findByEmail(userRequest.getEmail());
 
-        User userFind = users.get(0);
+        if (users.size() != 0) {
+            
+            User userFind = users.get(0);
 
-        System.out.println(userFind.getPassword());
-        System.out.println(userRequest.getPassword());
-        
-        // TODO - Descobrir pq essa condicional não está funcionando
-        if (userFind.getPassword().equals(userRequest.getPassword())) {
-            // Token fake   
-            return "token180320181122334455";
+            if (userFind.getPassword().equals(userRequest.getPassword())) {
+            
+                return userFind;
+            
+            }
         }
+
         return null;
 	}
 
